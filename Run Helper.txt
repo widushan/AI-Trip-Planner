@@ -1,0 +1,47 @@
+
+npm create vite@latest
+
+shadcn ui -> 
+
+npm install -D tailwindcss@3 postcss autoprefixer
+npx tailwindcss init -p
+
+it WILL create:
+tailwind.config.js
+postcss.config.js
+
+we used javascripts , So create file called - jsconfig.json
+{
+    "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  }
+}
+
+Update -> vite.config.ts
+import path from "path"
+import tailwindcss from "@tailwindcss/vite"
+import react from "@vitejs/plugin-react"
+import { defineConfig } from "vite"
+
+// https://vite.dev/config/
+export default defineConfig({
+  plugins: [react(), tailwindcss()],
+  resolve: {
+    alias: {
+      "@": path.resolve(__dirname, "./src"),
+    },
+  },
+})
+
+
+
+npx shadcn@latest init
+
+
+src/index.css ->
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

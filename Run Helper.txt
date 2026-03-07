@@ -3,12 +3,25 @@ npm create vite@latest
 
 shadcn ui -> 
 
-npm install -D tailwindcss@3 postcss autoprefixer
+npm install -D tailwindcss postcss autoprefixer
 npx tailwindcss init -p
 
 it WILL create:
 tailwind.config.js
 postcss.config.js
+
+Edit tailwind.config.js
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: [
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx}",
+  ],
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+}
 
 we used javascripts , So create file called - jsconfig.json
 {
@@ -36,12 +49,14 @@ export default defineConfig({
   },
 })
 
-
-
-npx shadcn@latest init
-
-
+Add Tailwind to your CSS
 src/index.css ->
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+npx shadcn-ui@latest init
+
+
+

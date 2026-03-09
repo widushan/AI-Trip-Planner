@@ -59,4 +59,7 @@ src/index.css ->
 npx shadcn-ui@latest init
 
 
+npm install react-router-dom
+
+
 

@@ -1,6 +1,6 @@
 import React from 'react'
 import { Button } from '../ui/button'
-
+import { Link } from 'react-router-dom'
 
 
 function Hero() {
@@ -12,7 +12,9 @@ function Hero() {
                 <span className='text-[#5c9df1]'>Discover Your Next Adventure with AI.</span><br /> Personalized Itineraries at Your Fingertips.
             </h1>
             <p className='text-center mt-5 text-xl text-gray-500'>Voygo leverages cutting-edge artificial intelligence to craft unique travel experiences tailored to your interests, budget, and style.</p>
-            <Button className='text-lg'>Get Started. It's Free</Button>
+            <Link to={"/create-trip"}>
+                <Button className='text-lg'>Get Started. It's Free</Button>
+            </Link>
         </div>
 
     )

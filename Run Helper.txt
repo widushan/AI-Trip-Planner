@@ -61,5 +61,9 @@ npx shadcn-ui@latest init
 
 npm install react-router-dom
 
+searh for packages in gooble -->
+google place autocomplete react -- https://www.npmjs.com/package/react-google-places-autocomplete
+
+
 
 

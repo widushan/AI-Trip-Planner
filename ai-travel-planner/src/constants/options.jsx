@@ -55,7 +55,7 @@ export const SelectBudgetOptions = [
 
 
 
-export const AI_PROMPT = `You are a travel agent. Create a detailed Travel Plan for Location : {location} for {days} days. The budget is {budget}. The group size is {people}. The interests are {interests}. The Travel Plan should include:
+export const AI_PROMPT = `You are a travel agent. Create a detailed Travel Plan for Location : {location} for {noOfDays} days. The budget is {budget}. The group size is {traveler}. The Travel Plan should include:
 1. Places to visit
 2. Daily breakdown of activities
 3. Accommodation recommendations

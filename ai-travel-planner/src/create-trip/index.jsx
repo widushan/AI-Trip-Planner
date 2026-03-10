@@ -14,6 +14,9 @@ function CreateTrip() {
     const [formData, setFormData] = useState([]);
 
     const handleInputChange = (name, value) => {
+
+        
+
         setFormData({
             ...formData,
             [name]: value

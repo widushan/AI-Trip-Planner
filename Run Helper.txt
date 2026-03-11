@@ -10,19 +10,6 @@ it WILL create:
 tailwind.config.js
 postcss.config.js
 
-Edit tailwind.config.js
-/** @type {import('tailwindcss').Config} */
-export default {
-  content: [
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
-  ],
-  theme: {
-    extend: {},
-  },
-  plugins: [],
-}
-
 we used javascripts , So create file called - jsconfig.json
 {
     "compilerOptions": {
@@ -49,21 +36,12 @@ export default defineConfig({
   },
 })
 
-Add Tailwind to your CSS
+
+
+npx shadcnui@latest init
+
+
 src/index.css ->
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-
-npx shadcn-ui@latest init
-
-
-npm install react-router-dom
-
-searh for packages in gooble -->
-google place autocomplete react -- https://www.npmjs.com/package/react-google-places-autocomplete
-
-
-
-

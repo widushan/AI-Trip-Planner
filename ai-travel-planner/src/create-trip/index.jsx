@@ -6,6 +6,15 @@ import GooglePlacesAutocomplete from 'react-google-places-autocomplete'
 import { toast } from 'sonner';
 import { generateTravelPlan } from '@/service/AIModel';
 import { AI_PROMPT } from '@/constants/options';
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from "@/components/ui/dialog"
+import { FcGoogle } from "react-icons/fc";
 
 
 
@@ -14,6 +23,8 @@ function CreateTrip() {
     const [place, setPlace] = useState();
 
     const [formData, setFormData] = useState([]);
+
+    const [openDialog, setOpenDialog] = useState(false);
 
     const handleInputChange = (name, value) => {
 
@@ -31,6 +42,14 @@ function CreateTrip() {
 
 
     const OnGenerateTrip = async () => {
+
+        const user = localStorage.getItem('user');
+
+        if (!user) {
+            setOpenDialog(true);
+            return;
+        }
+
         if (formData?.noOfDays > 5 && !formData?.location || !formData?.budget || !formData?.traveler) {
             toast.error("Please fill all fields and ensure the number of days is less than 5.");
             return;
@@ -113,6 +132,21 @@ function CreateTrip() {
             <div className='my-10 justify-end flex'>
                 <Button onClick={OnGenerateTrip}>Generate Trip</Button>
             </div>
+
+
+            <Dialog open={openDialog}>
+                <DialogContent>
+                    <DialogHeader>
+                        <DialogDescription className='flex flex-col items-center justify-center'>
+                            <img src="/Voygo.png" alt="" />
+                            <h2 className='text-lg font-bold'>Please Login to Continue</h2>
+                            <p className='text-gray-500'>Login to continue with your trip planning</p>
+                            <Button className='mt-5 w-full'><FcGoogle />Sign In with Google</Button>
+                        </DialogDescription>
+                    </DialogHeader>
+                </DialogContent>
+            </Dialog>
+
 
         </div>
     )

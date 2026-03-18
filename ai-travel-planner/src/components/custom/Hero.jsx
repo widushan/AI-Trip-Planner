@@ -13,7 +13,7 @@ function Hero() {
             </h1>
             <p className='text-center mt-5 text-xl text-gray-500'>Voygo leverages cutting-edge artificial intelligence to craft unique travel experiences tailored to your interests, budget, and style.</p>
             <Link to={"/create-trip"}>
-                <Button className='text-lg'>Get Started. It's Free</Button>
+                <Button className='text-lg'>Get Started</Button>
             </Link>
         </div>
 

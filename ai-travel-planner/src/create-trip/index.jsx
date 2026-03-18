@@ -44,7 +44,7 @@ function CreateTrip() {
         console.log(FINAL_PROMPT)
 
         const result = await generateTravelPlan(FINAL_PROMPT);
-        console.log(result?.response?.text());
+        console.log(result);
 
 
     }

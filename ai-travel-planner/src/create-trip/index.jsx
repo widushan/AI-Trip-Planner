@@ -4,6 +4,8 @@ import { SelectBudgetOptions, SelectedTravelesList } from '@/constants/options';
 import React, { useEffect, useState } from 'react'
 import GooglePlacesAutocomplete from 'react-google-places-autocomplete'
 import { toast } from 'sonner';
+import { generateTravelPlan } from '@/service/AIModel';
+import { AI_PROMPT } from '@/constants/options';
 
 
 
@@ -15,7 +17,7 @@ function CreateTrip() {
 
     const handleInputChange = (name, value) => {
 
-        
+
 
         setFormData({
             ...formData,
@@ -28,12 +30,23 @@ function CreateTrip() {
     }, [formData])
 
 
-    const OnGenerateTrip=()=>{
-        if(formData?.noOfDays>5 && !formData?.location || !formData?.budget || !formData?.traveler){
+    const OnGenerateTrip = async () => {
+        if (formData?.noOfDays > 5 && !formData?.location || !formData?.budget || !formData?.traveler) {
             toast.error("Please fill all fields and ensure the number of days is less than 5.");
-            return ;
+            return;
         }
-        console.log(formData)
+
+        const FINAL_PROMPT = AI_PROMPT.replace('{location}', formData?.location?.label)
+            .replace('{noOfDays}', formData?.noOfDays)
+            .replace('{traveler}', formData?.traveler)
+            .replace('{budget}', formData?.budget);
+
+        console.log(FINAL_PROMPT)
+
+        const result = await generateTravelPlan(FINAL_PROMPT);
+        console.log(result?.response?.text());
+
+
     }
 
 

@@ -15,6 +15,11 @@ import {
     DialogTrigger,
 } from "@/components/ui/dialog"
 import { FcGoogle } from "react-icons/fc";
+import { useGoogleLogin } from '@react-oauth/google';
+import axios from 'axios';
+import { doc, serverTimestamp, setDoc } from "firebase/firestore";
+import { db } from '@/service/firebaseConfig';
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 
 
@@ -25,6 +30,8 @@ function CreateTrip() {
     const [formData, setFormData] = useState([]);
 
     const [openDialog, setOpenDialog] = useState(false);
+
+    const [loading, setLoading] = useState(false);
 
     const handleInputChange = (name, value) => {
 
@@ -39,6 +46,11 @@ function CreateTrip() {
     useEffect(() => {
         console.log(formData)
     }, [formData])
+
+    const login = useGoogleLogin({
+        onSuccess: (codeResponse) => GetUserProfile(codeResponse),
+        onError: (error) => console.log('Login Failed:', error)
+    })
 
 
     const OnGenerateTrip = async () => {
@@ -55,17 +67,52 @@ function CreateTrip() {
             return;
         }
 
+        setLoading(true);
+
         const FINAL_PROMPT = AI_PROMPT.replace('{location}', formData?.location?.label)
             .replace('{noOfDays}', formData?.noOfDays)
             .replace('{traveler}', formData?.traveler)
             .replace('{budget}', formData?.budget);
 
-        console.log(FINAL_PROMPT)
+        // console.log(FINAL_PROMPT)
 
         const result = await generateTravelPlan(FINAL_PROMPT);
         console.log(result);
+        setLoading(false);
+        SaveTrip(result);
+    }
 
 
+    const SaveTrip = async (TripData) => {
+        setLoading(true);
+        const userStr = localStorage.getItem('user');
+        const user = userStr ? JSON.parse(userStr) : null;
+        const docId = Date.now().toString()
+        await setDoc(doc(db, "AITrips", docId), {
+            userSelection: formData,
+            userEmail: user?.email ? user?.email : '',
+            tripData: TripData,
+            id: docId,
+        });
+        setLoading(false);
+
+    }
+
+
+    const GetUserProfile = (tokenInfo) => {
+        axios.get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${tokenInfo?.access_token}`, {
+            headers: {
+                Authorization: `Bearer ${tokenInfo?.access_token}`,
+                Accept: 'application/json'
+            }
+        }).then((res) => {
+            console.log(res.data);
+            localStorage.setItem('user', JSON.stringify(res.data));
+            setOpenDialog(false);
+            OnGenerateTrip();
+        }).catch((err) => {
+            console.log(err);
+        })
     }
 
 
@@ -130,20 +177,33 @@ function CreateTrip() {
             </div>
 
             <div className='my-10 justify-end flex'>
-                <Button onClick={OnGenerateTrip}>Generate Trip</Button>
+                <Button
+                    disabled={loading}
+                    onClick={OnGenerateTrip}>
+                    {loading ?
+                        <AiOutlineLoading3Quarters className='h-7 w-7 animate-spin' /> :
+                        "Generate Trip"
+                    }
+                </Button>
             </div>
 
 
             <Dialog open={openDialog}>
                 <DialogContent>
                     <DialogHeader>
-                        <DialogDescription className='flex flex-col items-center justify-center'>
-                            <img src="/Voygo.png" alt="" />
-                            <h2 className='text-lg font-bold'>Please Login to Continue</h2>
-                            <p className='text-gray-500'>Login to continue with your trip planning</p>
-                            <Button className='mt-5 w-full'><FcGoogle />Sign In with Google</Button>
+                        <DialogTitle className="flex flex-col items-center gap-2 text-lg font-bold mt-7">
+                            <img src="/Voygo.png" alt="logo" />
+                            Please Login to Continue
+                        </DialogTitle>
+                        <DialogDescription className="text-center text-gray-500">
+                            Login to continue with your trip planning
                         </DialogDescription>
                     </DialogHeader>
+                    <Button
+                        onClick={() => login()} className='mt-5 w-full flex gap-4 items-center'>
+                        <FcGoogle className='h-7 w-7' />
+                        Sign In with Google
+                    </Button>
                 </DialogContent>
             </Dialog>
 

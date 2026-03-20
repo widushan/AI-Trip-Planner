@@ -55,14 +55,4 @@ export const SelectBudgetOptions = [
 
 
 
-export const AI_PROMPT = `You are a travel agent. Create a detailed Travel Plan for Location : {location} for {noOfDays} days. The budget is {budget}. The group size is {traveler}. The Travel Plan should include:
-1. Places to visit
-2. Daily breakdown of activities
-3. Accommodation recommendations
-4. Transportation suggestions
-5. Food recommendations
-6. Budget breakdown
-7. Packing list
-8. Travel tips
-
-The Travel Plan should be engaging, informative, and easy to follow. Use markdown formatting to make it visually appealing. Do not include any promotional content or affiliate links. Just provide the Travel Plan.`
+export const AI_PROMPT = `Generate Travel Plan for Location: {location}, for {noOfDays} Days for {traveler} with a {budget} budget, give Hotel options list with HotelName, Hotel address, Price, hotel image url, geo coordinates, rating, descriptions and suggest itinerary with placeName, Place Details, Place Image Url, Geo Coordinates, ticket Pricing, rating, Time travel each of the location for {noOfDays} days with each day plan with best time to visit in JSON format.`

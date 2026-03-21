@@ -191,7 +191,7 @@ function CreateTrip() {
             </div>
 
 
-            <Dialog open={openDialog}>
+            <Dialog open={openDialog} onOpenChange={setOpenDialog}>
                 <DialogContent>
                     <DialogHeader>
                         <DialogTitle className="flex flex-col items-center gap-2 text-lg font-bold mt-7">

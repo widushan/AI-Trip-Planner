@@ -1,15 +1,34 @@
 import { Button } from '@/components/ui/button'
-import React from 'react'
+import { getPlaceDetails, PHOTO_REF_URL } from '@/service/GlobalApi';
+import React, { useEffect, useState } from 'react'
 import { IoIosSend } from "react-icons/io";
+
 
 
 
 function InfoSection({ trip }) {
 
+    const [photoUrl, setPhotoUrl] = useState();
+
+    useEffect(() => {
+        trip && GetPlacePhoto()
+    }, [trip])
+
+    const GetPlacePhoto = async () => {
+        const data = {
+            textQuery: trip?.userSelection?.location?.label
+        }
+        const result = await getPlaceDetails(data).then(resp => {
+            const photoRef = resp.data.places[0].photos[3].name
+            const photoUrl = PHOTO_REF_URL.replace('{NAME}', photoRef)
+            setPhotoUrl(photoUrl)
+        })
+    }
+
     return (
 
         <div>
-            <img src="/Travelling.jpg" className='w-full h-[350px] object-cover rounded-xl' />
+            <img src={photoUrl} className='w-full h-[350px] object-cover rounded-xl' />
 
             <div className='flex justify-between items-center'>
                 <div className='my-5 flex flex-col gap-2'>

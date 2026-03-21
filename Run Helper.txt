@@ -45,3 +45,8 @@ src/index.css ->
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+
+https://developers.google.com/maps/documentation/urls/get-started
+https://developers.google.com/maps/documentation/places/web-service/text-search

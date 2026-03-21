@@ -15,7 +15,11 @@ function Hero() {
             <Link to={"/create-trip"}>
                 <Button className='text-lg'>Get Started</Button>
             </Link>
+
+            <img src="/bg.png" className='mt-10 w-full' />
+
         </div>
+
 
     )
 

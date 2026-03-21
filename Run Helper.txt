@@ -50,3 +50,4 @@ src/index.css ->
 
 https://developers.google.com/maps/documentation/urls/get-started
 https://developers.google.com/maps/documentation/places/web-service/text-search
+https://firebase.google.com/docs/firestore/query-data/get-data#get_all_documents_in_a_collection
